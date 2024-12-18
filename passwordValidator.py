@@ -22,7 +22,7 @@ def verification():
         showwarning("Avertissement", f"{nomUtilisateur},\nVeuillez Saisir votre mot de passe")
         raise Exception("Veuillez Saisir votre mot de passe")
     
-    if nomUtilisateur.isalpha()  and  prenomUtilisateur.isalpha  and  motDePasseUtilisateur!="":
+    if nomUtilisateur.isalpha  and  prenomUtilisateur.isalpha  and  motDePasseUtilisateur!="":
         while motDePasseUtilisateur not in listeDeMotsDePasseValide:
             print(f"{nomUtilisateur} , votre accès est refusé.")
             askretrycancel("Avertissement" , f"{nomUtilisateur}\nVotre Accès est refusé\nIl vous reste 2 tentatives")
