@@ -1,89 +1,75 @@
-#Créer une application graphique qui permet de vérifier la validité d'un mot de passe entré par l'utilisatteur 
 from tkinter import *
-from tkinter.ttk import *  #importe les widgets améliorés
-from tkinter.messagebox import *  #Importe les boîtes de dialogues
+from tkinter.ttk import *
+from tkinter.messagebox import showerror, showinfo, showwarning
 
-#Création de la fonction de vérification
+# Variable globale pour suivre les tentatives
+tentatives = 0
 
-
+# Création de la fonction de vérification
 def verification():
+    global tentatives
     nomUtilisateur = zoneSaisieDuNom.get()
     prenomUtilisateur = zoneSaisieDuPrenom.get()
     motDePasseUtilisateur = zoneDeSaisieMotDePasse.get()
-    listeDeMotsDePasseValide = ["admin123", "user456" , "guest789"]
-    global nombreDeTentative
-    nombreDeTentative =0
+    listeDeMotsDePasseValide = ["admin123", "user456", "guest789"]
 
-    if not nomUtilisateur.isalpha or not prenomUtilisateur.isalpha :
-        showerror("Erreur" , "Valeur du Nom ou Prénom d'utilisateur Incorrecte!")
-        raise Exception("Mauvaise Saisie !")
-    
-    if motDePasseUtilisateur == "" and nomUtilisateur.isalpha and prenomUtilisateur.isalpha:
-        showwarning("Avertissement", f"{nomUtilisateur},\nVeuillez Saisir votre mot de passe")
-        raise Exception("Veuillez Saisir votre mot de passe")
-    
-    if nomUtilisateur.isalpha  and  prenomUtilisateur.isalpha  and  motDePasseUtilisateur!="":
-        while motDePasseUtilisateur not in listeDeMotsDePasseValide:
-            print(f"{nomUtilisateur} , votre accès est refusé.")
-            askretrycancel("Avertissement" , f"{nomUtilisateur}\nVotre Accès est refusé\nIl vous reste 2 tentatives")
-            nombreDeTentative=+1
-            
-            if nombreDeTentative ==3 :
-                print("Trop de tentatives. Accès vérrouillé")
-                showerror("Erreur" , f"{nomUtilisateur}\nVous avez eu 3 tentatives.\nVotre Accès est vérrouillé ")
-                break
-              
+    if not nomUtilisateur.isalpha() or not prenomUtilisateur.isalpha():
+        showerror("Erreur", "Valeur du Nom ou Prénom d'utilisateur incorrecte!")
+        return
+
+    if motDePasseUtilisateur == "":
+        showwarning("Avertissement", f"{nomUtilisateur},\nVeuillez saisir votre mot de passe.")
+        return
+
+    if motDePasseUtilisateur in listeDeMotsDePasseValide:
+        showinfo("Succès", "Accès autorisé.")
+        reset_tentatives()
+    else:
+        global tentatives
+        tentatives += 1
+        if tentatives >= 3:
+            showerror("Erreur", "Nombre de tentative dépassé, Accès verrouillé")
+            reset_tentatives()
         else:
-           print("Accès autorisé.")
-           showinfo("Succès" , "Accès Autorisé")
-            
-    
+            showwarning("Erreur", f"Mot de passe incorrect. Tentatives restantes : {3 - tentatives}")
+            zoneDeSaisieMotDePasse.delete(0, END)
 
-#Création de la fonction qui supprime les zones de saisies
+# Fonction pour réinitialiser le compteur de tentatives
+def reset_tentatives():
+    global tentatives
+    tentatives = 0
+    zoneSaisieDuNom.delete(0, END)  #Pour supprimer d'un coup le contenu de la zone de nom
+    zoneSaisieDuPrenom.delete(0, END)  #Pour supprimer d'un coup le contenu de la zone de prenom
+    zoneDeSaisieMotDePasse.delete(0, END)  #Pour supprimer d'un coup le contenu de la zone de mot de passe
+
+# Création de la fonction qui supprime les zones de saisie
 def supression():
-    zoneSaisieDuNom.delete(first=0)
-    zoneSaisieDuPrenom.delete(first=0)
-    zoneDeSaisieMotDePasse.delete(first=0)
+    reset_tentatives()
 
-#Création de la fenêtre principale
+# Création de la fenêtre principale
 fenetre = Tk()
+fenetre.title("Password Validator")
+fenetre.geometry("650x500")
+fenetre.resizable(width=True, height=True)
 
-#Configuration de la fenêtre principale
-fenetre.title("Password Validator")  #Titre de la fenêtre principale
-fenetre.geometry("650x500")  #Taille de la fenêtre principale
-fenetre.resizable(width=True , height=True)  #Redimensionnage de la fenêtre principale
+# Ajout des Widgets
+Label(fenetre, text="Nom* :", font="Arial").place(x=100, y=50)
+zoneSaisieDuNom = Entry(fenetre, font="Arial", width=35)
+zoneSaisieDuNom.place(x=220, y=46, height=30)
 
-#Ajout des Widgets
-labelNomUtilisateur = Label(fenetre , text="Nom* :" , font="Arial")
-labelNomUtilisateur.place_configure(x=100 , y=50)
-zoneSaisieDuNom = Entry(fenetre, font="Arial"  , width=35)
-zoneSaisieDuNom.place(x=220 , y= 46 , height=30 )
+Label(fenetre, text="Prénoms* :", font="Arial").place(x=100, y=150)
+zoneSaisieDuPrenom = Entry(fenetre, font="Arial", width=35)
+zoneSaisieDuPrenom.place(x=220, y=147, height=30)
 
-labelPrenomUtilisateur = Label(fenetre , text="Prénoms* : " , font="Arial")
-labelPrenomUtilisateur.place_configure( x=100 , y=150)
-zoneSaisieDuPrenom = Entry(fenetre , font="Arial" , width=35)
-zoneSaisieDuPrenom.place_configure(x=220 , y= 147, height=30)
+Label(fenetre, text="Mot de Passe* :", font="Arial").place(x=100, y=250)
+zoneDeSaisieMotDePasse = Entry(fenetre, font="Arial", width=35, show="*")
+zoneDeSaisieMotDePasse.place(x=220, y=248, height=30)
 
+Label(fenetre, text="*Champs de saisie Obligatoires", foreground="red").place(x=220 , y=300)
 
-labelMotDePasse = Label(fenetre , text="Mot de Passe*: " , font="Arial")
-labelMotDePasse.place_configure(x=100 , y=250 )
-zoneDeSaisieMotDePasse = Entry(fenetre, font="Arial" , width=35)
-zoneDeSaisieMotDePasse.place_configure(x=220 , y=248, height=30 )
+# Ajout des Boutons
+Button(fenetre, text="Valider", command=verification).place(x=220, y=350)
+Button(fenetre, text="Annuler", command=supression).place(x=400, y=350)
 
-
-
-
-#Ajout des Boutons DE Validation et d'Annulation
-boutonValider = Button(fenetre, text="Valider", command=verification)
-boutonValider.place_configure(x=220 , y=350)
-
-boutonAnnuler = Button(fenetre, text="Annuler", command=supression)
-boutonAnnuler.place_configure(x=400, y=350)
-
-
-
-
-
-
-#Affichage de la fenêtre principale
+# Affichage de la fenêtre principale
 fenetre.mainloop()
