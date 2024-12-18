@@ -50,7 +50,8 @@ def supression():
 fenetre = Tk()
 fenetre.title("Password Validator")
 fenetre.geometry("650x500")
-fenetre.resizable(width=True, height=True)
+fenetre.resizable(width=False, height=False)
+fenetre.config(background="navy")  #couleur de la fenêtre d'arrière plan 
 
 # Ajout des Widgets
 Label(fenetre, text="Nom* :", font="Arial").place(x=100, y=50)
