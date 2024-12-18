@@ -14,7 +14,7 @@ def verification():
     global nombreDeTentative
     nombreDeTentative =0
 
-    if not nomUtilisateur.isalpha() or not prenomUtilisateur.isalpha() :
+    if not nomUtilisateur.isalpha or not prenomUtilisateur.isalpha :
         showerror("Erreur" , "Valeur du Nom ou Prénom d'utilisateur Incorrecte!")
         raise Exception("Mauvaise Saisie !")
     
