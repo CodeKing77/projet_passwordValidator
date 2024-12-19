@@ -1,9 +1,24 @@
+""" 
+Téléchargement & Installation la bibliothèque regex sur la console par la commande : pip installl regex
+qui permet de  prendre en compte caractères Unicode, 
+y compris les caractères accentués et les caractères spéciaux de différentes langues
+"""
+from regex import *  #Puis Importation du Module regex dans le code
 from tkinter import *
 from tkinter.ttk import *
 from tkinter.messagebox import showerror, showinfo, showwarning
 
 # Variable globale pour suivre les tentatives
 tentatives = 0
+
+
+#Fonction  qui valide les noms saisis
+def validerNom(nom):
+    #Autorise les tirets, les lettres et les espaces
+    pattern = r"^[\p{L}][\p{L}\s\-]*$" #  pareil avec pattern = r"^[\p{L}\s\-]+$"
+    return bool(search(pattern, nom))
+
+
 
 # Création de la fonction de vérification
 def verification():
@@ -13,7 +28,7 @@ def verification():
     motDePasseUtilisateur = zoneDeSaisieMotDePasse.get()
     listeDeMotsDePasseValide = ["admin123", "user456", "guest789"]
 
-    if not nomUtilisateur.isalpha() or not prenomUtilisateur.isalpha():
+    if not validerNom(nomUtilisateur) or not validerNom(prenomUtilisateur):
         showerror("Erreur", "Valeur du Nom ou Prénom d'utilisateur incorrecte!")
         return
 
@@ -31,7 +46,7 @@ def verification():
             showerror("Erreur", "Nombre de tentative dépassé, Accès verrouillé")
             reset_tentatives()
         else:
-            showwarning("Erreur", f"Mot de passe incorrect. Tentatives restantes : {3 - tentatives}")
+            showwarning("Erreur", f"Mot de passe incorrect.\n{nomUtilisateur} il vous reste {3 - tentatives} Tentatives  ")
             zoneDeSaisieMotDePasse.delete(0, END)
 
 # Fonction pour réinitialiser le compteur de tentatives
