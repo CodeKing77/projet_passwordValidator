@@ -25,7 +25,7 @@ def verification():
         showinfo("Succès", "Accès autorisé.")
         reset_tentatives()
     else:
-        global tentatives
+        #global tentatives
         tentatives += 1
         if tentatives >= 3:
             showerror("Erreur", "Nombre de tentative dépassé, Accès verrouillé")
@@ -38,9 +38,9 @@ def verification():
 def reset_tentatives():
     global tentatives
     tentatives = 0
-    zoneSaisieDuNom.delete(0, END)  #Pour supprimer d'un coup le contenu de la zone de nom
-    zoneSaisieDuPrenom.delete(0, END)  #Pour supprimer d'un coup le contenu de la zone de prenom
-    zoneDeSaisieMotDePasse.delete(0, END)  #Pour supprimer d'un coup le contenu de la zone de mot de passe
+    zoneSaisieDuNom.delete(0, END)  #Pour supprimer d'un coup tout le contenu de la zone de nom (Du début à la fin)
+    zoneSaisieDuPrenom.delete(0, END)  #Pour supprimer d'un coup tout le contenu de la zone de prenom (Du début à la fin)
+    zoneDeSaisieMotDePasse.delete(0, END)  #Pour supprimer d'un coup  tout le contenu de la zone de mot de passe (Du début à la fin)
 
 # Création de la fonction qui supprime les zones de saisie
 def supression():
