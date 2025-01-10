@@ -1,6 +1,6 @@
 """ 
-Téléchargement & Installation la bibliothèque regex sur la console par la commande : pip installl regex
-qui permet de  prendre en compte caractères Unicode, 
+Téléchargement & Installation la bibliothèque regex sur la console par la commande : pip install regex
+qui permet de  prendre en compte les caractères Unicode, 
 y compris les caractères accentués et les caractères spéciaux de différentes langues
 """
 from regex import *  #Puis Importation du Module regex dans le code
