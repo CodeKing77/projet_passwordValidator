@@ -9,6 +9,7 @@ from regex import * # Importation du Module regex dans le code
 from tkinter import *
 from tkinter.ttk import *
 from tkinter.messagebox import showerror, showinfo, showwarning
+from PIL import Image , ImageTk  # Importation de la Bibliothèque pillow pour insérer les images dans la fenêtre
 import time
 
 # Variable globale pour suivre les tentatives
@@ -81,6 +82,12 @@ fenetre.title("Password Validator")
 fenetre.geometry("650x500")
 fenetre.resizable(width=False, height=False)
 fenetre.config(background="navy")  # couleur de la fenêtre d'arrière plan
+
+# Charger l'image pour l'icône de la fenêtre
+icon_path = "C:/Users/lenovo/Desktop/MyApps/projet_passwordValidator/connexion_small.png" 
+icon_image = Image.open(icon_path)
+icon_photo = ImageTk.PhotoImage(icon_image)
+fenetre.iconphoto(False, icon_photo)
 
 # Ajout des Widgets
 Label(fenetre, text="Nom* :", font="Arial").place(x=100, y=50)
