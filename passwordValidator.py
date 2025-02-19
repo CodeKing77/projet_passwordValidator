@@ -3,8 +3,9 @@ Téléchargement & Installation  de la bibliothèque regex sur la console par la
 qui permet de  prendre en compte les caractères Unicode, 
 y compris les caractères accentués et les caractères spéciaux de différentes langues
 """
+#NB: Les modules re et regex fonctionnent différemment
 
-from regex import *  # Importation du Module regex dans le code
+from regex import * # Importation du Module regex dans le code
 from tkinter import *
 from tkinter.ttk import *
 from tkinter.messagebox import showerror, showinfo, showwarning
