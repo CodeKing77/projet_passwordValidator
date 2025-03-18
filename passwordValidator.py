@@ -3,19 +3,20 @@ Téléchargement & Installation  de la bibliothèque regex sur la console par la
 qui permet de  prendre en compte les caractères Unicode, 
 y compris les caractères accentués et les caractères spéciaux de différentes langues
 """
-#NB: Les modules re et regex fonctionnent différemment
+#NB: Les modules re et regex fonctionnent différemment 
 
-from regex import * # Importation du Module regex dans le code
+from regex import * #Importation du Module regex dans le code
 from tkinter import *
 from tkinter.ttk import *
 from tkinter.messagebox import showerror, showinfo, showwarning
 from PIL import Image , ImageTk  # Importation de la Bibliothèque pillow pour insérer les images dans la fenêtre
 import time
 
+
 # Variable globale pour suivre les tentatives
 tentatives = 0
 verrouille_jusqua = 0
-verrouillage_duree = 5 * 60  # 5 minutes en secondes
+verrouillage_duree = 5 * 60  #05 minutes en secondes
 
 # Fonction qui valide les noms saisis
 def validerNom(nom):
@@ -55,6 +56,16 @@ def verification():
             showwarning("Erreur", f"Mot de passe incorrect.\n{nomUtilisateur} il vous reste {3 - tentatives} Tentatives")
             zoneDeSaisieMotDePasse.delete(0, END)
 
+def validerNom(nom):
+    # Autorise les tirets, les lettres et les espaces
+    pattern = r"^[\p{L}][\p{L}\s\-]*$"  # pareil avec pattern = r"^[\p{L}\s\-]+$"
+    return bool(search(pattern, nom))
+
+# Création de la fonction de vérification
+def alter_verification(event):
+    verification()
+
+
 # Fonction pour réinitialiser le compteur de tentatives
 def reset_tentatives():
     global tentatives
@@ -93,20 +104,24 @@ fenetre.iconphoto(False, icon_photo)
 Label(fenetre, text="Nom* :", font="Arial").place(x=100, y=50)
 zoneSaisieDuNom = Entry(fenetre, font="Arial", width=35)
 zoneSaisieDuNom.place(x=220, y=46, height=30)
+zoneSaisieDuNom.bind('<Return>' , alter_verification)  #Permettre à ce que le code s'execute suite à l'appui sur la touche Enter du  clavier
 
 Label(fenetre, text="Prénoms* :", font="Arial").place(x=100, y=150)
 zoneSaisieDuPrenom = Entry(fenetre, font="Arial", width=35)
 zoneSaisieDuPrenom.place(x=220, y=147, height=30)
+zoneSaisieDuPrenom.bind('<Return>' , alter_verification)  #Permettre à ce que le code s'execute suite à l'appui sur la touche Enter du  clavier
 
 Label(fenetre, text="Mot de Passe* :", font="Arial").place(x=100, y=250)
 zoneDeSaisieMotDePasse = Entry(fenetre, font="Arial", width=35, show="*")
 zoneDeSaisieMotDePasse.place(x=220, y=248, height=30)
+zoneDeSaisieMotDePasse.bind('<Return>' , alter_verification)   #Permettre à ce que le code s'execute suite à l'appui sur la touche Enter du  clavier
 
 Label(fenetre, text="*Champs de saisie Obligatoires", foreground="red").place(x=220, y=300)
 
 # Ajout des Boutons
 bouton_valider = Button(fenetre, text="Valider", command=verification)
 bouton_valider.place(x=220, y=350)
+
 
 bouton_annuler = Button(fenetre, text="Annuler", command=suppression)
 bouton_annuler.place(x=400, y=350)
