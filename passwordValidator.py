@@ -90,7 +90,7 @@ def suppression():
 # Création de la fenêtre principale
 fenetre = Tk()
 fenetre.title("Password Validator")
-fenetre.geometry("650x500")
+fenetre.geometry("750x500")
 fenetre.resizable(width=False, height=False)
 fenetre.config(background="navy")  # couleur de la fenêtre d'arrière plan
 
@@ -103,28 +103,28 @@ fenetre.iconphoto(False, icon_photo)
 # Ajout des Widgets
 Label(fenetre, text="Nom* :", font="Arial").place(x=100, y=50)
 zoneSaisieDuNom = Entry(fenetre, font="Arial", width=35)
-zoneSaisieDuNom.place(x=220, y=46, height=30)
+zoneSaisieDuNom.place(x=280, y=46, height=30)
 zoneSaisieDuNom.bind('<Return>' , alter_verification)  #Permettre à ce que le code s'execute suite à l'appui sur la touche Enter du  clavier
 
 Label(fenetre, text="Prénoms* :", font="Arial").place(x=100, y=150)
 zoneSaisieDuPrenom = Entry(fenetre, font="Arial", width=35)
-zoneSaisieDuPrenom.place(x=220, y=147, height=30)
+zoneSaisieDuPrenom.place(x=280, y=147, height=30)
 zoneSaisieDuPrenom.bind('<Return>' , alter_verification)  #Permettre à ce que le code s'execute suite à l'appui sur la touche Enter du  clavier
 
 Label(fenetre, text="Mot de Passe* :", font="Arial").place(x=100, y=250)
 zoneDeSaisieMotDePasse = Entry(fenetre, font="Arial", width=35, show="*")
-zoneDeSaisieMotDePasse.place(x=220, y=248, height=30)
+zoneDeSaisieMotDePasse.place(x=280, y=248, height=30)
 zoneDeSaisieMotDePasse.bind('<Return>' , alter_verification)   #Permettre à ce que le code s'execute suite à l'appui sur la touche Enter du  clavier
 
-Label(fenetre, text="*Champs de saisie Obligatoires", foreground="red").place(x=220, y=300)
+Label(fenetre, text="*Champs de saisie Obligatoires", foreground="red").place(x=280, y=300)
 
 # Ajout des Boutons
 bouton_valider = Button(fenetre, text="Valider", command=verification)
-bouton_valider.place(x=220, y=350)
+bouton_valider.place(x=280, y=350)
 
 
 bouton_annuler = Button(fenetre, text="Annuler", command=suppression)
-bouton_annuler.place(x=400, y=350)
+bouton_annuler.place(x=450, y=350)
 
 # Affichage de la fenêtre principale
 fenetre.mainloop()
